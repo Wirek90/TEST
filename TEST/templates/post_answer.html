@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+
+
+{% block title %}ASK MATE{% endblock %}
+
+{% block page_content %}
+    <p>Question title: {{ questions[0]['title'] }}</p><br>
+    <p>Question: {{ questions[0]['message'] }}</p>
+    <form method="post">
+        <label for="answer" id="your_answer">Your answer:</label>
+        <br/>
+        <textarea id="answer" name="answer" rows="5" cols="80" minlength="10" required></textarea>
+        <br/>
+        <button type="submit" id="submit_add_answer">Submit Answer</button>
+        <select>
+            {% for users in user_list %}
+            <option value="{{ users['username'] }}">{{ users['username'] }}</option>
+            {% endfor %}
+        </select>
+    </form>
+    {% set link="/question/" + question_id|string %}
+    <form action={{ link }} method='get' name="Back to question" id="Back to question">
+        <button type="submit" id="Back to question">Back to question</button>
+    </form>
+
+{% endblock %}

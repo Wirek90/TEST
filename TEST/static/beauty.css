@@ -1,0 +1,34 @@
+h2 {
+    text-shadow: 3px 2px red
+}
+#submit {
+ width: 364px;
+ height: 60px;
+}
+
+#submit_1 {
+ width: 587px;
+ height: 60px;
+}
+
+#submit_add_question{
+ width: 353px;
+ height: 60px;
+}
+
+#submit_add_answer{
+ width: 574px;
+ height: 60px;
+}
+
+#question, #your_question{
+    color: red;
+}
+
+#your_title, #title{
+    color: blue;
+}
+
+#your_answer, #answer{
+    color: chocolate;
+}

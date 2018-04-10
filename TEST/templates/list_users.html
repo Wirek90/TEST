@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+
+{% block title %}ASK MATE{% endblock %}
+
+{% block page_content %}
+
+    <table class="table">
+      <tr>
+          {% for item in labels|sort %}
+              <th>{{ item }}</th>
+          {% endfor %}
+      </tr>
+        {% for user in users %}
+            <tr>
+              {% for key, value in user.items()|sort %}
+                <td> {{ value }} </td>
+              {% endfor %}
+            </tr>
+        {% endfor %}
+</table>
+
+{% endblock %}

@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+
+
+{% block title %}ASK MATE{% endblock %}
+
+{% block page_content %}
+    <h2>Ask Your Question</h2>
+    <p>
+    </p>
+    <form method="POST">
+        <label for="title" id="your_title">Your title</label><br>
+        <textarea rows="1" cols="50" name="title" id="title" required></textarea><br>
+        <label for="message" id="your_question">Your question</label><br>
+        <textarea minlength="10" rows="10" cols="50" name="question" id="question" required></textarea>
+        <p>
+        </p>
+        <input type="submit" value="Submit Question" id="submit">
+    </form>
+{% endblock %}

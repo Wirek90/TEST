@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+
+
+{% block title %}ASK MATE{% endblock %}
+
+{% block page_content %}
+    {% if answer_id %}
+        <p>Answer: {{ answer[0]['message'] }}</p>
+        {% set post_answer_comment_link="/question/" + question_id|string + "/answer/" + answer_id|string + "/new-comment" %}
+        <form method="post" action={{ post_answer_comment_link }}>
+    {% else %}
+        <p>Question title: {{ question[0]['title'] }}</p><br>
+        <p>Question: {{ question[0]['message'] }}</p>
+        {% set post_question_comment_link="/question/" + question_id|string + "/new-comment" %}
+        <form method="post">
+    {% endif %}
+<label for="comment" id="your_comment">Your comment:</label>
+<br/>
+<textarea id="comment" name="comment" rows="5" cols="80" minlength="10" required>{% if question_comment %}
+    {{ question_comment[0]['message'] }} {% endif %}</textarea>
+<br/>
+<button type="submit" , id="submit_add_comment">{% if question_comment %} Edit comment {% else %} Submit
+    comment {% endif %} </button>
+</form>
+{% set link="/question/" + question_id|string %}
+<form action={{ link }} method='get' name="Back to question" id="Back to question">
+    <button type="submit" id="Back to question">Back to question</button>
+</form>
+{% endblock %}

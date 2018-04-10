@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+
+
+{% block title %}ASK MATE{% endblock %}
+
+{% block page_content %}
+    <h1> USER {{ user['username'] }} </h1>
+    <p> Registration date: {{ user['registration_date'] }} </p>
+    <p> Reputation: {{ user['reputation'] }} </p>
+    <h2> USER'S QUESTIONS</h2>
+    <table border="1">
+        <tr>
+            <th>Question</th>
+            <th>Submission time</th>
+            <th>Votes</th>
+        </tr>
+    </table>
+{% endblock %}

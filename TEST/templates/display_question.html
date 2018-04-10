@@ -1,0 +1,170 @@
+{% extends 'base.html' %}
+
+
+{% block title %}ASK MATE{% endblock %}
+
+{% block page_content %}
+
+    <table class="table">
+        <tr>
+            {% for item in labels|sort %}
+                <th>{{ item }}</th>
+            {% endfor %}
+        </tr>
+        <tr>
+            {% set question_id = question_id|int %}
+            {% set q = question[0] %}
+            {% set vote_up='/question/' + question_id|string + "/vote-up" %}
+            {% set vote_down='/question/' + question_id|string + "/vote-down" %}
+            {% for key, value in q.items()|sort %}
+                <td> {{ value }} </td>
+            {% endfor %}
+            <td><a href={{ vote_up }}><img alt="Like" src='/static/like.png' height='20'></a></td>
+            <td><a href={{ vote_down }}><img alt="Dislike" src='/static/dislike.png' height='20' width='30'></a></td>
+        </tr>
+    </table>
+    <br>
+    {% if labels_question_comment == [] %}
+        <p>This question has no comments yet.</p>
+    {% else %}
+        <h1> Comments: </h1>
+        <table class="table">
+            <tr>
+                <th>Comment:</th>
+                <th>Submission time:</th>
+                <th>Edited count:</th>
+                <th>Edit:</th>
+                <th>Delete:</th>
+            </tr>
+            {% for comment in question_comment %}
+                {% set answer_id = comment["answer_id"] %}
+                {% if answer_id == none %}
+                    {% set comment_id = comment["id"]|int %}
+                    {% set message = comment['message']|string %}
+                    {% set submission_time = comment["submission_time"]|string %}
+                    {% set delete_link = "/comments/" + comment_id|string + "/delete" %}
+                    {% set edit_link = "/comments/" + comment_id|string + "/edit" %}
+                    <tr>
+                        <td>
+                            {{ message }}
+                        </td>
+                        <td>
+                            {{ submission_time }}
+                        </td>
+                        <td>
+                            {% if comment['edited_count'] %} {{ comment['edited_count'] }}
+                            {% else %} 0
+                            {% endif %}
+                        </td>
+                        <td>
+                            <form action={{ edit_link }} method='get' name="Edit comment" id="Edit comment">
+                                <input type="submit" value="Edit" id="edit">
+                            </form>
+                        </td>
+                        <td>
+                            <a href={{ delete_link }}>
+                                <span class="glyphicon glyphicon-trash"></span>
+                            </a>
+                        </td>
+                    </tr>
+                {% endif %}
+            {% endfor %}
+        </table>
+    {% endif %}
+    <br>
+    {% if labels_answer == [] %}
+        <p>This question has no answers yet. Be the first Mate!</p>
+    {% else %}
+        {% for field in questions_answer %}
+            <h1> Answers: </h1>
+            <table class="table">
+                <tr>
+                    <th>Answer</th>
+                    <th>Submission time</th>
+                    <th>Votes</th>
+                    <th>Accepted</th>
+                    <th>Vote Up</th>
+                    <th>Vote Down</th>
+                </tr>
+                <tr>
+                    <td>{{ field['message'] }}</td>
+                    <td>{{ field['submission_time'] }}</td>
+                    <td>{{ field['vote_number'] }}</td>
+                    <td>{% if field['accepted'] == none %} Accepted {% else %} Not Accepted {% endif %}</td>
+                    {% set question_id = question_id|int %}
+                    {% set answer_id = field['id']|int %}
+                    {% set accepted = field['accepted'] %}
+                    {% set vote_up='/question/' + question_id|string + "/" + answer_id|string + "/vote-up" %}
+                    {% set vote_down='/question/' + question_id|string + "/" + answer_id|string + "/vote-down" %}
+                    {% set post_answer_comment_link = '/question/' + question_id|string + "/answer/" + answer_id|string + "/new-comment" %}
+                    {% set accept_answer_link = '/question/' + question_id|string + "/answer/" + answer_id|string + "/accept" %}
+                    <td><a href={{ vote_up }}><img alt="Like" src='/static/like.png' height='20'></a></td>
+                    <td><a href={{ vote_down }}><img alt="Dislike" src='/static/dislike.png' height='20' width='30'></a>
+                    </td>
+                    <td>
+                        <form action={{ post_answer_comment_link }} method='get' name="New answer comment"
+                              id="New answer comment">
+                            <input type="submit" value="Add comment to answer" , id="submit_1">
+                        </form>
+                    </td>
+                    <td>
+                        {% if accepted %}
+                            Answer is accepted!
+                        {% else %}
+                            <form action={{ accept_answer_link }} method='post' name="Accept answer"
+                                  id="Accept Answer">
+                                <input type="submit" value="Accept Answer" , id="accept">
+                            </form>
+                        {% endif %}
+                    </td>
+                </tr>
+            </table>
+            <h2>Comments to answer</h2>
+            {% for comment in answer_comment %}
+                <table class="table">
+                {% set _id = comment['id']|int %}
+                {% set comment_id = comment['answer_id']|int %}
+                {% if comment_id == answer_id %}
+                    {% set delete_link = "/comments/" + _id|string + "/delete" %}
+                    <tr>
+                        <th>Comment:</th>
+                        <th>Submission time:</th>
+                        <th>Delete:</th>
+                    </tr>
+                    <tr>
+                        <td>
+                            {{ comment['message'] }}
+                        </td>
+                        <td>
+                            {{ comment['submission_time'] }}
+                        </td>
+                        <td>
+                            <a href={{ delete_link }}>
+                                <span class="glyphicon glyphicon-trash"></span>
+                            </a>
+                        </td>
+                    </tr>
+                {% endif %}
+            {% endfor %}
+        </table>
+        {% endfor %}
+    {% endif %}
+    <div>
+        {% set new_answer_link = '/question/' + question_id|string + '/new-answer' %}
+        <form action={{ new_answer_link }} method='get' name="New answer" id="New answer">
+            <input type="submit" value="Add an answer" , id="submit_1">
+        </form>
+        <p></p>
+        <br>
+        {% set new_comment_link = '/question/' + question_id|string + '/new-comment' %}
+        <form action={{ new_comment_link }} method='get' name="New comment" id="New comment">
+            <input type="submit" value="Add comment" , id="submit_1">
+        </form>
+        <p></p>
+        <br>
+        <form action='/' method='get' name="Back to main page" id="Back to main page">
+            <input type="submit" value="Back to main page" id="submit_1">
+        </form>
+    </div>
+
+{% endblock %}

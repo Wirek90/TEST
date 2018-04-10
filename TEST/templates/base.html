@@ -1,0 +1,17 @@
+{% extends 'bootstrap/base.html' %}
+
+{% block navbar %}
+    <nav class="navbar navbar-inverse" role="navigation">
+        <div class="container">
+            <a class="navbar-brand" href="{{ url_for('list_questions') }}">AskMate</a>
+            <a class="navbar-brand" href="{{ url_for('user_registration') }}">Register</a>
+            <a class="navbar-brand" href="{{ url_for('view_users') }}">View All Users</a>
+       </div>
+    </nav>
+{% endblock %}
+
+{% block content %}
+    <div class="container">
+        {% block page_content %}{% endblock %}
+    </div>
+{% endblock %}

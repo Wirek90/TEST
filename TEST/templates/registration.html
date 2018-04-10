@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+
+{% block title %}ASK MATE{% endblock %}
+{% block page_content %}
+    <form action="{{ url_for('user_registration') }}" method="POST">
+        <h1>Create new user</h1>
+        <p>Enter your Username</p>
+        <input type="text" id="username" name="username"><br>
+        <input type="submit" value="Submit">
+    </form>
+
+{% endblock %}
+
