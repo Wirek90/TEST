@@ -66,7 +66,7 @@ def open_database():
     except (Exception, psycopg2.DatabaseError) as error:
         print(error)
     return connection
-
+ 
 
 @connection_handler
 def get_all_answers(cursor):
