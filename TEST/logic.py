@@ -81,7 +81,7 @@ def vote_question(question_id, vote):
     :param vote: value of True or False; if false vote down, if true vote up
     :return: void (just changes the database itself)
     '''
-    vote_reputation_for_questions(question_id, vote)
+
     questions = persistence.get_all_items("question")
     for question in questions:
         if int(question['id']) == int(question_id):
@@ -90,9 +90,10 @@ def vote_question(question_id, vote):
             elif vote is False:
                 question['vote_number'] = int(question['vote_number']) - 1
             persistence.update_question_vote(question)
+            change_reputation_for_question(question_id, vote)
             break
 
-def vote_reputation_for_questions(question_id, vote):
+def change_reputation_for_question(question_id, vote):
     users_and_questions = persistence.get_all_questions_and_users()
     for user in users_and_questions:
         if int(user['question_id']) == int(question_id):
@@ -126,7 +127,6 @@ def get_answer_comments(ids):
 
 
 def vote_answer(answer_id, vote):
-    vote_reputation_for_answers(answer_id, vote)
     answers = persistence.get_all_items("answer")
     for answer in answers:
         if int(answer['id']) == int(answer_id):
@@ -135,10 +135,11 @@ def vote_answer(answer_id, vote):
             elif vote is False:
                 answer['vote_number'] = int(answer['vote_number']) - 1
             persistence.update_answer_vote(answer)
+            change_reputation_for_answer(answer_id, vote)
             break
 
 
-def vote_reputation_for_answers(answer_id, vote):
+def change_reputation_for_answer(answer_id, vote):
     users_and_answers = persistence.get_all_answers_and_users()
     for user in users_and_answers:
         if int(user['answer_id']) == int(answer_id):
