@@ -54,7 +54,7 @@ def add_row_to_db(row, table):
     cursor.execute(query, values)
     connection.close()
 
-
+ 
 def open_database():
     connection = None
     try:
