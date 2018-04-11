@@ -30,7 +30,7 @@ def submit_question():
     dict = logic.question_dict(request.form["title"], request.form["question"])
     persistence.add_row_to_db(dict, "question")
     return redirect('/list')
-
+ 
 
 @app.route('/question/<int:question_id>/new-comment', methods=["GET", "POST"])
 def new_question_comment(question_id=None):
