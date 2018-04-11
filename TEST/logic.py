@@ -152,7 +152,7 @@ def change_reputation_for_answer(answer_id, vote):
 
 
 
-
+ 
 def register_user(name):
     values = [name, str(datetime.now().replace(microsecond=0))]
     persistence.add_user_to_db(values)
